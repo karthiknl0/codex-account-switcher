@@ -6,9 +6,15 @@
 $RawBase = 'https://raw.githubusercontent.com/karthiknl0/codex-account-switcher/main'
 
 function Get-CodexAumid {
-    $app = Get-StartApps | Where-Object { $_.Name -match 'codex' -and $_.AppID -match 'OpenAI' } | Select-Object -First 1
+    # Current Codex builds can appear as "ChatGPT" in Start, so use the
+    # package identity rather than the display name.
+    $app = Get-StartApps | Where-Object { $_.AppID -match '^OpenAI\.Codex_' } | Select-Object -First 1
     if (-not $app) { $app = Get-StartApps | Where-Object { $_.Name -match 'codex' } | Select-Object -First 1 }
-    return $app.AppID
+    if ($app) { return $app.AppID }
+
+    # Fall back to the installed Store package when its Start entry is delayed.
+    $package = Get-AppxPackage -Name 'OpenAI.Codex' -ErrorAction SilentlyContinue | Select-Object -First 1
+    if ($package) { return "$($package.PackageFamilyName)!App" }
 }
 
 # Best-effort update check, cached once per day.
