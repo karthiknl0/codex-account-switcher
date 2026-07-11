@@ -22,7 +22,8 @@ This installs everything:
 
 - `codex-auth` (account manager) and the **Codex CLI**, via npm
 - `~/.codex-tools/codex-switch.ps1` — the switch + app-restart script
-- a **`codex-switch`** command in your PowerShell profiles
+- **`codex-switch`**, **`codex-add`**, and **`codex-update`** commands in your
+  PowerShell profiles
 - a **"Codex Switch Account"** shortcut on your Desktop
 
 > **Requires:** Windows, the [Codex desktop app](https://openai.com/codex/), and
@@ -65,6 +66,22 @@ Either:
 
 You get an arrow-key account picker. Choose one, and the Codex desktop app
 closes and reopens logged into that account.
+
+---
+
+## Updating
+
+The switcher checks for updates once per day when you run `codex-switch`. If a
+new version is available, it prints an update notice in the terminal. To
+install it, run this in PowerShell:
+
+```powershell
+codex-update
+```
+
+When the update finishes, close that PowerShell window and open a new one
+before using `codex-switch` again. You can also re-run the one-line install
+command from the [Install](#install-one-line) section.
 
 ---
 
